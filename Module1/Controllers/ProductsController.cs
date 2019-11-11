@@ -13,16 +13,23 @@ namespace Module1.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
+        ProductDbContext context;
         static List<Products> _products = new List<Products>()
         {
             new Products(){Id = 1, Name = "P1", Price = 20},
             new Products(){Id = 2, Name = "P2", Price = 30}
         };
 
+        public ProductsController(ProductDbContext productDbContext)
+        {
+            context = productDbContext;
+
+        }
+
         [HttpGet]
         public IActionResult Get()
         {
-            return StatusCode(StatusCodes.Status200OK,_products);
+            return StatusCode(StatusCodes.Status200OK, context.Products.ToList());
         }
 
         [HttpGet("GetFirstProduct")]
