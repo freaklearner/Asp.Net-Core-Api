@@ -56,8 +56,18 @@ namespace Module1.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]Products products)
         {
-            _products.Add(products);
-            return StatusCode(StatusCodes.Status201Created);
+            context.Products.Add(products);
+            try
+            {
+                context.SaveChanges(true);
+                return StatusCode(StatusCodes.Status201Created,"Data Added Successfully");
+
+            }catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+            }
+            //_products.Add(products);
+            //return StatusCode(StatusCodes.Status201Created);
         }
 
         [HttpPost("FirstElement")]
