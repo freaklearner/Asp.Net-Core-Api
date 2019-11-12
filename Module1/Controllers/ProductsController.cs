@@ -47,6 +47,33 @@ namespace Module1.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Get(string sorting)
+        {
+            IQueryable<Products> products;
+            switch (sorting)
+            {
+                case "desc":
+                    products = context.Products.OrderByDescending(x => x.Price);
+                    break;
+                case "asc":
+                    products = context.Products.OrderBy(x => x.Price);
+                    break;
+                default:
+                    products = context.Products;
+                    break;
+            }
+
+            if (products != null)
+            {
+                return StatusCode(StatusCodes.Status200OK, products);
+            }
+            else
+            {
+                return StatusCode(StatusCodes.Status404NotFound); 
+            }
+        }
+
         [HttpGet("GetSecondProduct")]
         public IActionResult GetSecondProduct()
         {
