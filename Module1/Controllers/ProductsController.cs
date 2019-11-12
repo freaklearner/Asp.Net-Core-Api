@@ -109,9 +109,20 @@ namespace Module1.Controllers
         }
 
         [HttpDelete("{Id}")]
-        public void Delete(int Id)
+        public IActionResult Delete(int Id)
         {
             //_products.RemoveAt(Id);
+            var product = context.Products.Find(Id);
+            if (product != null)
+            {
+                context.Products.Remove(product);
+                context.SaveChanges(true);
+                return StatusCode(StatusCodes.Status200OK, "Record removed successfully");
+            }
+            else
+            {
+                return StatusCode(StatusCodes.Status400BadRequest,"No Record Found");
+            }
             
         }
 
