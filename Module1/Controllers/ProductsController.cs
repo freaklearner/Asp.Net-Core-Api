@@ -47,6 +47,16 @@ namespace Module1.Controllers
             }
         }
 
+        [HttpGet("paging")]
+        public IActionResult Get(int? page, int? size)
+        {
+            var products = from p in context.Products.OrderBy(x => x.Id) select p;
+            int currentPage = page ?? 1;
+            int currentSize = size ?? 5;
+            var items = (products.Skip((currentPage - 1) * currentSize)).Take(currentSize).ToList();
+            return StatusCode(StatusCodes.Status200OK, items);
+        }
+
         [HttpGet]
         public IActionResult Get(string sorting)
         {
