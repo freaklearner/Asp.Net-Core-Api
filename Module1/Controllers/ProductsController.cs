@@ -26,16 +26,25 @@ namespace Module1.Controllers
 
         }
 
-        [HttpGet]
+        
         public IActionResult Get()
         {
             return StatusCode(StatusCodes.Status200OK, context.Products.ToList());
         }
 
-        [HttpGet("GetFirstProduct")]
-        public IActionResult GetFirstProduct()
+        [HttpGet("{Id}")]
+        public IActionResult Get(int id)
         {
-            return StatusCode(StatusCodes.Status200OK, _products[0]);
+            //return StatusCode(StatusCodes.Status200OK, _products[0]);
+            var product = context.Products.SingleOrDefault(x => x.Id == id);
+            if (product != null)
+            {
+                return StatusCode(StatusCodes.Status200OK, product);
+            }
+            else
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
         }
 
         [HttpGet("GetSecondProduct")]
