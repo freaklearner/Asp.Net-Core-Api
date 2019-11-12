@@ -60,7 +60,7 @@ namespace Module1.Controllers
             try
             {
                 context.SaveChanges(true);
-                return StatusCode(StatusCodes.Status201Created,"Data Added Successfully");
+                return StatusCode(StatusCodes.Status201Created,"S");
 
             }catch(Exception ex)
             {
@@ -85,15 +85,34 @@ namespace Module1.Controllers
         }
 
         [HttpPut("{Id}")]
-        public void Put(int Id,[FromBody] Products products)
+        public IActionResult Put(int Id,[FromBody] Products products)
         {
-            _products[Id] = products;
+            //_products[Id] = products;
+            if(Id == products.Id)
+            {
+                try
+                {
+
+
+                    context.Products.Update(products);
+                    context.SaveChanges(true);
+                    return StatusCode(StatusCodes.Status202Accepted, "Data Updated Successfully");
+                }catch(Exception ex)
+                {
+                    return StatusCode(StatusCodes.Status404NotFound, "No record found");
+                }
+            }
+            else
+            {
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
         }
 
         [HttpDelete("{Id}")]
         public void Delete(int Id)
         {
-            _products.RemoveAt(Id);
+            //_products.RemoveAt(Id);
+            
         }
 
     }
