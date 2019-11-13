@@ -8,6 +8,7 @@ using Module1.Models;
 
 namespace Module1.Controllers
 {
+    [ApiVersion("1.0")]
     [Produces("application/json")]
     [Route("api/Products")]
     [ApiController]
@@ -129,14 +130,12 @@ namespace Module1.Controllers
             {
                 try
                 {
-
-
                     context.Products.Update(products);
                     context.SaveChanges(true);
                     return StatusCode(StatusCodes.Status202Accepted, "Data Updated Successfully");
                 }catch(Exception ex)
                 {
-                    return StatusCode(StatusCodes.Status404NotFound, "No record found");
+                    return StatusCode(StatusCodes.Status404NotFound, "No record found: "+ex.Message);
                 }
             }
             else

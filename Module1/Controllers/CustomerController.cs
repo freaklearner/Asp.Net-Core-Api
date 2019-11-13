@@ -8,6 +8,7 @@ using Module1.Models;
 
 namespace Module1.Controllers
 {
+    [ApiVersion("1.0")]
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
