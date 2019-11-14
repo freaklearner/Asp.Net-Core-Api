@@ -10,7 +10,7 @@ namespace Module1.Controllers
 {
     [ApiVersion("1.2")]
     [Produces("application/json")]
-    [Route("api/v{version:ApiVersion}/movies")]
+    [Route("api/movies")]
     [ApiController]
     public class MovieV2Controller : ControllerBase
     {
